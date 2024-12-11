@@ -29,4 +29,52 @@ fn main() {
 
     // The reference only needs to store the memory address of the value.
     // The size of the value can be statically determined when generating code, so there's no need to carry size information with the reference.
+
+
+
+    // Vector data in Rust are stored on the heap, and unlike arrays, they are dynamically allocated and can grow in size. When a vector needs to reallocate memory, it typically does so by allocating a new, larger memory block rather than expanding the existing one. Reallocation only occurs when the vector's current capacity is filled, and an attempt is made to add a new element. This process helps maintain efficient memory usage while ensuring that elements remain in a contiguous block.
+
+
+
+    // In both C and Rust, the compiler inserts padding to ensure that fields within structs are aligned to their required memory boundaries, based on their size or system-defined alignment requirements. Even if a field like char doesn’t have strict alignment, padding is added after it to ensure that larger fields (like int) are properly aligned, which is important for performance and correctness. This padding ensures efficient memory access, prevents misalignment errors, and maintains a consistent layout across different platforms.
+
+
+
+    let _v: Vec<i32> = Vec::new(); // To create a new empty vector.
+    // Note that we added a type annotation here. Becauses we aren't interting any values into this vector, Rust doesn't know what kind of elements we intend to store. This is an important point. Vectors are implemented using generics; we'll cover how to use generics with your own types in Chapter 10. For now, know that the Vec<T> type provided by the standard library can hold any type. When we create a vector to hold a specific type, we can specify the type within angle bracket
+
+    let _v2 = vec![1, 2, 3]; // Creates a new Vec<i32> that holds the values 1, 2, and 3. The integer type is i32 because that's the default inteer type.
+    // Because we've given initial i32 values, Rust can infer that the type of v is Vec<i32>, and the type annotation isn't necessary.
+
+    // For some reason if the vector is initialized empty it points to 0x1 or 0x2 or 0x4 or 0x8 ( There might be multiple vectors pointing to the same location ), it differs depending on the type of T, I suspect that this is due to memory alignment, but I don't know if these values are manually specified in rust source code.
+
+    let mut _v3 = Vec::new();
+    _v3.push(1); // As with any varible, if we want to be able to change its value, we need to make it mutable using the mut keyword.
+    // The number 1 is of type i32, and Rust infers this from the data,so we don't need the Vec<i32> annotation.
+
+
+    // To read elements of Vectors:
+    // v[index]
+    // v.get(index) => Option<&T>
+
+    // For more on the implementation details of the Vec<T> type, see "The Rustonomicon" at https://doc.rust-lang.org/nomicon/vec/vec.html.
+
+    // Iterating:
+
+    // let v = vec![100, 32, 57];
+    // for i in &v {
+    //  println!("{i}");
+    // }
+
+    // let mut v = vec![100, 32, 57];
+    // for i in &mut v {
+    //  *i += 50;
+    // }
+
+    // To change the value that the mutable reference refers to, we have to use the * dereference operator to get to the value in i before we can use the += operator. We'll talk more about the dereference operator in "Following the Pointer to the Value" on page 322.
+
+    let mut s = String::new(); // Creating a new, empty string
+    let s2 = "initial contents".to_string();
+    let mut s3 = String::from("initial contents");
+    s3.push_str("IDK");
 }
